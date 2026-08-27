@@ -87,3 +87,6 @@ crashlytics-build.properties
 # CLAUDE.local.md is the Claude Code loader that imports AGENTS.override.md.
 /AGENTS.override.md
 /CLAUDE.local.md
+
+# Local Claude Code settings. Not shared with contributors.
+/.claude/settings.local.json
