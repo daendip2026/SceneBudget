@@ -72,8 +72,8 @@ crashlytics-build.properties
 
 # --- SceneBudget additions ---
 
-# SceneBudgetChar01.vrm is tracked on purpose; its VRM meta grants redistribution.
-# Do not add *.vrm.
+# Assets/Characters/SceneBudgetChar01.vrm is tracked on purpose; its VRM meta grants
+# redistribution. Do not add *.vrm.
 
 # VRoid Studio project source. The .vrm is the distributed artifact.
 *.vroid
