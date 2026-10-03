@@ -1,0 +1,14 @@
+# Requires pre-commit, Python 3, and a .NET SDK providing dotnet format.
+# Enable after cloning: pre-commit install
+# Check tracked files: pre-commit run --all-files
+# Fix formatting: dotnet format whitespace Assets/Scripts --folder
+repos:
+  - repo: local
+    hooks:
+      - id: csharp-format
+        name: Check C# formatting
+        language: system
+        entry: python tools/check_csharp_format.py
+        files: '^(Assets/Scripts/.*\.cs|(.*/)?\.editorconfig|tools/check_csharp_format\.py|\.pre-commit-config\.yaml)$'
+        require_serial: true
+        stages: [pre-commit]

@@ -11,7 +11,7 @@ public class LightIntensityControl : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if(controlledLight == null)
+        if (controlledLight == null)
         {
             Debug.LogError("Controlled Light is not assigned.", this);
             enabled = false;
@@ -25,13 +25,13 @@ public class LightIntensityControl : MonoBehaviour
     void Update()
     {
         var keyboard = Keyboard.current;
-        
+
         if (keyboard == null)
         {
             return;
         }
 
-        if(keyboard.rKey.wasPressedThisFrame)
+        if (keyboard.rKey.wasPressedThisFrame)
         {
             controlledLight.intensity = initialIntensity;
         }
