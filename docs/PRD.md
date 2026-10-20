@@ -46,7 +46,7 @@ During recording, the operator starts the prepared camera and lighting effects a
 
 When the take is finished, the operator stops the recording. To record again from the beginning, the operator returns the camera and lighting to their settings before recording and starts a new recording. If the intended visuals or behavior do not appear, the operator corrects the condition that caused it (e.g., effect settings, view, input state) and records again.
 
-### 3.2 Measurement and optimization decisions
+### 3.2 Measuring and deciding on optimization changes
 
 A developer checks whether the stage meets the requirements in an assessment run. An assessment run is a run and recording in which the stage, OBS, and the input program all run as in the reference environment (conditions in Section 5.2). In an assessment run, the developer observes and measures visuals, functions, runtime performance, and resource usage, and records the input program used and its version and settings.
 
@@ -70,13 +70,13 @@ The stage must show on its running output the avatar's movement, the camera view
 
 Each camera view and effect must show the subjects and movements to be shown so that they can be identified while the scene's movement is coming in. Lighting, materials, and background must meet the visual appearance criteria defined by the scene's document.
 
-### 4.3 Behavior and input handling during transitions and effects
+### 4.3 Behavior during transitions and effects, interrupted input, and additional controls
 
-The avatar must keep moving according to the input while a camera transition or an effect is in progress. If the movement input is interrupted, the stage and the recording must continue, and the stage must detect the interruption. Values that cannot be applied to the avatar (e.g., non-numeric or out-of-range values) must not be applied. What the stage does when the operator performs a control other than the restore action (Section 4.4) during a transition or effect must be defined. The time to detect an interruption, the avatar during the interruption, whether and how to notify the operator, and the handling of additional controls are open items in Section 7.
+The avatar must keep moving according to the input while a camera transition or an effect is in progress. If the movement input is interrupted, the stage and the recording must continue, and the stage must detect the interruption. Values that cannot be applied to the avatar (e.g., non-numeric or out-of-range values) must not be applied. What the stage does when the operator uses a control other than the restore action (Section 4.4) during a transition or effect must be defined. The time to detect an interruption, the avatar during the interruption, whether and how to notify the operator, and what the stage does with additional controls are open items in Section 7.
 
 ### 4.4 Restoring settings for another take
 
-When the operator performs the restore action, the stage must stop the camera and lighting effects in progress and return the camera and lighting to the pre-recording settings defined by the scene's document. After restoration, the operator must be able to select the initial view and start a new recording. The time allowed for restoration and the behavior for controls during restoration are open items in Section 7.
+When the operator triggers the restore action, the stage must stop the camera and lighting effects in progress and return the camera and lighting to the pre-recording settings defined by the scene's document. After restoration, the operator must be able to select the initial view and start a new recording. The time allowed for restoration and the behavior for controls during restoration are open items in Section 7.
 
 ### 4.5 Runtime and recording quality
 
@@ -92,17 +92,17 @@ The comparison materials for an optimization change (the verification materials 
 
 ### 4.8 Materials for assessing requirements and repeating verification
 
-The verification materials must link the tested scene, the stage version (the project version), the execution environment (the actual PC specification and settings of the reference environment), the input and control conditions (including the input program used with its version and settings, and the recorded input), the measurements and observations, and the decision rationale. For each scene and requirement, they must show whether it is met (tested and satisfied), unmet (tested and not satisfied), or not evaluated (not yet tested), and they must show the materials needed for reproduction and any restrictions on using them.
+The verification materials must link the tested scene, the stage version (the project version), the execution environment (the actual PC specification and settings of the reference environment), the input and control conditions (including the input program used with its version and settings, and the recorded input), the measurements and observations, and the decision rationale. For each scene and requirement, they must show whether it is met (tested and satisfied), unmet (tested and not satisfied), or not evaluated (not yet tested), and they must show the materials needed to repeat a test and any restrictions on using them.
 
 ## 5. Verification and success criteria
 
 ### 5.1 Connecting requirements to tests
 
-Verification is done per scene. Each requirement in Section 4 is linked to that scene's test conditions, verification method, expected result, and the evidence to retain, and then tested. Requirements whose conditions or assessment criteria do not yet exist are completed first; if they cannot be decided or the evidence cannot be obtained, the requirement is left as not evaluated, with the reason.
+Verification is done per scene. Each requirement in Section 4 is linked to that scene's test conditions, verification method, expected result, and the evidence to retain, and then tested. For requirements whose conditions or assessment criteria do not yet exist, define them first; if they cannot be defined or the evidence cannot be obtained, leave the requirement as not evaluated, with the reason.
 
 ### 5.2 Functional, visual, runtime, and recording verification
 
-Runtime and recording quality (Section 4.5) and the functions in which the input program is involved (movement display, interruption handling) are assessed with an assessment run (Section 3). The results of an assessment run hold only for the input program used at the time and its version and settings. If a requirement is unmet because of the input program's load, this is not separated out; it is left as unmet under those conditions. A comparison run (Section 3) is used only for comparing before and after an optimization change and for finding causes, not for assessing whether requirements are met.
+Runtime and recording quality (Section 4.5) and the functions in which the input program is involved (movement display, interruption detection) are assessed with an assessment run (Section 3). The results of an assessment run hold only for the input program used at the time and its version and settings. If a requirement is unmet because of the input program's load, this is not separated out; it is left as unmet under those conditions. A comparison run (Section 3) is used only for comparing before and after an optimization change and for finding causes, not for assessing whether requirements are met.
 
 #### Functional verification
 
@@ -114,8 +114,8 @@ Functions are checked through actual operation. For each test, record the stage 
 | 4.1 View selection and effects | Select a view and start an effect, then compare the selected view and the camera and lighting changes that effect defines with the screen | Control records, the selected view and started effect, and screen records | Do the selected view and the started effect appear on screen? |
 | 4.3 Movement during transitions and effects | Keep feeding input while running transitions and effects and watch the avatar's movement | Input and control records, and screen records of the transition and effect intervals | Does the avatar keep moving according to the input during transitions and effects? |
 | 4.3 Interrupted input and values that cannot be applied | Stop the input program or break the connection and watch whether the stage and recording continue and whether the interruption is detected; for values that cannot be applied, replay recorded input containing such values and watch whether they are left unapplied | The time and conditions of the interruption, the stage's indication or record that it detected the interruption, and screen and recording records | Do the stage and recording continue and is the interruption detected? Are the values that cannot be applied left unapplied? |
-| 4.3 Additional controls | After the expected result is defined, perform additional controls during transitions and effects | The conditions and controls introduced, the handling result, and screen records | Does the stage behave as defined? |
-| 4.4 Restoration | Perform the restore action during an effect, compare the camera and lighting settings with the scene's pre-recording settings, then select a view and start a new recording | Settings before and after restoration, control records, and screen records | Do the effects stop, do the settings return to the pre-recording settings, and can a view be selected and a new recording started? |
+| 4.3 Additional controls | After the expected result is defined, use additional controls during transitions and effects | The conditions and controls introduced, what the stage did, and screen records | Does the stage behave as defined? |
+| 4.4 Restoration | Trigger the restore action during an effect, compare the camera and lighting settings with the scene's pre-recording settings, then select a view and start a new recording | Settings before and after restoration, control records, and screen records | Do the effects stop, do the settings return to the pre-recording settings, and can a view be selected and a new recording started? |
 | 4.6 Input and control recording and replay | Record the input and controls, then replay them without the input program or an operator and compare the avatar's movement and the changes of view and effects with those at recording time. Also replay the same recorded input after the stage has been changed | The recorded input, and screen records at recording time and at replay | Are the same movement and the same changes of view and effects produced? Does the replay also work on the changed stage? |
 
 Results are written as met or unmet against the requirement's criteria; items without conditions, criteria, or evidence are left as not evaluated as in Section 5.1.
@@ -133,41 +133,41 @@ Results are written per tested interval and condition; items that cannot be judg
 
 #### Runtime and recording verification
 
-Runtime and recording are checked with an assessment run. Feed movement, effects, and controls for the defined duration, and look separately at the stage's output and sustained execution, OBS's processing state, and the recorded file. Record the stage version, the reference environment's PC configuration and the stage, OBS, and input program settings, the input and control conditions, and the test duration.
+Runtime and recording are checked with an assessment run. Feed movement, effects, and controls for the defined duration, and look separately at the stage's output and sustained execution, OBS's missed and late frame information, and the recorded file. Record the stage version, the reference environment's PC configuration and the stage, OBS, and input program settings, the input and control conditions, and the test duration.
 
 | Related requirement | Conditions and method | Evidence to retain | What to assess |
 |---|---|---|---|
 | 4.5 Stage output and sustained execution | Run for the defined duration and observe and measure output resolution, runtime performance (the frame rate and frame time actually rendered), resource usage, and visuals and functions | Output checks, measurements over time, and visual and functional observations | Do the output and the visuals, functions, and performance during sustained execution meet the criteria? |
-| 4.5 Recording processing state | In the same interval, look at OBS's processing state and its information on missed or late frames | OBS processing records and the intervals with problems | Does recording processing meet the defined metrics and criteria? |
-| 4.5 Recorded output | Look at the file's resolution and frame rate information, and compare playback with the input, effect, and view transition records to check order, omissions, and stutter | The recorded file, file information, compared intervals, and observations | Does the recording meet the output and quality criteria and preserve the order of effects, movement, and views? |
+| 4.5 Missed and late frames during recording | In the same interval, look at the missed and late frame information OBS shows | OBS's missed and late frame records and the intervals with problems | Are missed and late frames within the defined metrics and criteria? |
+| 4.5 Recorded output | Look at the file's resolution and frame rate information, and compare playback with the input, effect, and view transition records to check order, omissions, and freezes | The recorded file, file information, compared intervals, and observations | Does the recording meet the output and quality criteria and preserve the order of effects, movement, and views? |
 
 Settings or the file's frame rate information alone do not establish actual frame delivery or recording quality. Metrics, collection methods, observation intervals, and criteria values are defined before testing.
 
-### 5.3 Optimization comparisons and adoption decisions
+### 5.3 Comparing optimization changes and deciding whether to accept them
 
 How much an optimization change altered performance is measured with a comparison run. All conditions other than the changed element are kept the same: the input and controls, and the effects they trigger, are matched by replaying the same recorded input; the execution environment and recording conditions are also kept the same; and the same metrics and collection and calculation methods are used. Check the variation between repeated runs, missing measurements, and conditions that could not be matched to judge whether the comparison evidence is valid, and separate usable results from what cannot be judged, with reasons. The repeat count and validity criteria are defined before testing.
 
-Alongside the performance comparison, apply those parts of the functional and visual verification of Section 5.2 that can be done without the input program, with the same criteria, in the comparison runs before and after the same change, to check that visuals and functions are preserved. Write down the performance change and the preservation of visuals and functions separately, then consider them together, and record whether the change is accepted or deferred and the basis. If performance improves but visuals or functions are not preserved, write that down. If the comparison evidence is insufficient or preservation cannot be confirmed, defer and write down the items to check further. Whether an accepted change meets the requirements is assessed with an assessment run as described in Section 5.2.
+Alongside the performance comparison, do those parts of the functional and visual checks of Section 5.2 that can be done without the input program, with the same criteria, in the comparison runs before and after the same change, to check that visuals and functions are preserved. Write down separately how much performance changed and whether visuals and functions are preserved, then consider them together, and record whether the change is accepted or deferred and the basis. If performance improves but visuals or functions are not preserved, write that down. If the comparison evidence is insufficient or the developer cannot confirm that visuals and functions are preserved, defer and write down the items to check further. Whether an accepted change meets the requirements is assessed with an assessment run as described in Section 5.2.
 
 ### 5.4 Repeating verification using the provided materials
 
-The comparison materials of Section 4.7 and the verification materials of Section 4.8 are checked by whether the recorded conditions and the provided materials allow a test to be done again and its results compared with the existing records. What is needed to repeat a run is as in Section 3. Check whether the required stage version, settings, input materials (files fed into the stage other than recorded input), and procedure can be found and applied, whether the changed element, held conditions, and before-and-after results can be distinguished in the comparison materials, and whether the earlier test corresponding to a new result can be identified. If information or materials are insufficient or conditions cannot be matched, write down the items that could not be checked and the limitations. Record separately whether the test could be repeated and whether its results agree with the existing records. Agreement is judged, for an assessment run, by whether the met or unmet assessment is the same, and for a comparison run, by whether the metrics are within the defined allowed range; if they differ, write down the differences and what to check further.
+The comparison materials of Section 4.7 and the verification materials of Section 4.8 are checked by whether the recorded conditions and the provided materials allow a test to be done again and its results compared with the existing records. What is needed to repeat a run is as in Section 3. Check whether the required stage version, settings, input materials (files fed into the stage other than recorded input), and procedure can be found and used as recorded, whether the changed element, held conditions, and before-and-after results can be distinguished in the comparison materials, and whether the earlier test corresponding to a new result can be identified. If information or materials are insufficient or conditions cannot be matched, write down the items that could not be checked and the limitations. Record separately whether the test could be repeated and whether its results agree with the existing records. Agreement is judged, for an assessment run, by whether the met or unmet assessment is the same, and for a comparison run, by whether the metrics are within the defined allowed range; if they differ, write down the differences and what to check further.
 
-### 5.5 Assessing achievement of project goals
+### 5.5 Deciding whether the project goals are achieved
 
-The project goals are achieved when, for each scene in the agreed scope, the Section 4 requirements are met under the conditions they define, the performance changed by optimization and its limits can be explained with valid comparison evidence, and the deliverables of Section 6 have been provided under the delivery conditions it defines. Which scenes are included is part of the agreed scope. To assess this, link the results of Sections 5.2–5.4 to each requirement and check met, unmet, and not evaluated; consider the performance change, the preservation of visuals and functions, and the basis for accepting or deferring changes together; and check that delivery matches the contents and conditions of Section 6. While any requirement remains unmet or not evaluated, or any delivery condition remains unmet or unchecked, do not record the goals as achieved; distinguish finished items from remaining items and write down how the remaining items affect use, delivery, repeat verification, and the interpretation of results.
+The project goals are achieved when, for each scene in the agreed scope, the Section 4 requirements are met under the conditions they define, the performance changed by optimization and its limits can be explained with valid comparison evidence, and the deliverables of Section 6 have been provided under the delivery conditions it defines. Which scenes are included is part of the agreed scope. To assess this, link the results of Sections 5.2–5.4 to each requirement and check met, unmet, and not evaluated; consider together how much performance changed, whether visuals and functions are preserved, and the basis for accepting or deferring each change; and check that delivery matches the contents and conditions of Section 6. While any requirement remains unmet or not evaluated, or any delivery condition remains unmet or unchecked, do not record the goals as achieved; distinguish finished items from remaining items and write down how the remaining items affect use, delivery, repeat verification, and the interpretation of results.
 
 ## 6. Deliverables and delivery conditions
 
 A Windows build that runs the stage, and the Unity project in which its configuration and code can be inspected, modified, and built, are provided. Which stage version each build corresponds to is stated.
 
-The setup and operating instructions enable the stage to be run and recorded. They contain the required execution environment, external tools, input materials, how to obtain the input program each scene uses (see the last paragraph of this section) and how to connect it to the stage, the preparation steps, how to start effects, select views, and record another take, and known limitations. What differs per scene is added by that scene's document.
+The setup and operating instructions tell the reader how to run and record the stage. They contain the required execution environment, external tools, input materials, how to obtain the input program each scene uses (see the last paragraph of this section) and how to connect it to the stage, the preparation steps, how to start effects, select views, and record another take, and known limitations. What differs per scene is added by that scene's document.
 
 A demonstration video is provided for each scene. It shows the result of the implemented effects and controls and states the stage version and the recording conditions (including the input program used and its version), so that the provided behavior and visuals can be checked before running the stage.
 
 Verification materials are provided for each scene. Their contents are those defined in Sections 4.7 and 4.8, and the raw measurements and observations are provided with them so that the basis for judgments can be checked.
 
-Of what is needed to repeat verification (Section 3), the following is provided and how to obtain the rest is explained: the stage version, the stage and OBS settings, the test procedure, and the recorded input used in comparison runs (the extent to which recorded input is provided follows the last paragraph of this section). The input program used in assessment runs is covered by instructions as described in the last paragraph of this section, and its version and settings are written in the verification materials (Section 4.8). Any part of the conditions that cannot be reproduced, and its effect, is stated.
+Of what is needed to repeat verification (Section 3), the following is provided and how to obtain the rest is explained: the stage version, the stage and OBS settings, the test procedure, and the recorded input used in comparison runs (the extent to which recorded input is provided follows the last paragraph of this section). For the input program used in assessment runs, how to obtain it is explained as described in the last paragraph of this section, and its version and settings are written in the verification materials (Section 4.8). Any part of the conditions that cannot be reproduced, and its effect, is stated.
 
 Code, assets, input materials, and recorded input are provided to the extent their usage and distribution terms allow. What cannot be provided, and why, is written under the usage restrictions in Section 4.8, and the extent to which recorded input is provided is defined by the scene's document. For things that this project does not build (Section 2) and that must be obtained separately (e.g., the input program), the source, required version, terms, and how to obtain it are explained. All information needed to run, review, and repeat verification must be in the provided materials.
 
@@ -197,9 +197,9 @@ What each scene decides (views and effects, visual appearance criteria, the move
 
 **Related sections:** 2; 4.1; 5.2 functional verification.
 
-#### Handling of additional controls, display delay, and restoration time
+#### Additional controls, display delay, and restoration time
 
-**Open:** the handling of additional controls during effects and transitions, the allowed delay between an input or control and its appearance on screen, the time allowed for restoration for another take, and the handling of controls during restoration.
+**Open:** what the stage does with additional controls during effects and transitions, the allowed delay between an input or control and its appearance on screen, the time allowed for restoration, and what the stage does with controls during restoration.
 
 **Impact:** the expected results and functional test conditions for Sections 4.3 and 4.4 are not defined.
 
@@ -211,7 +211,7 @@ What each scene decides (views and effects, visual appearance criteria, the move
 
 **Open:** the criteria values for output resolution, frame rate, and sustained execution time, the criteria for missed and late frames in the recording, the thresholds for performance metrics, and the repeat count and validity criteria for comparison runs.
 
-**Impact:** the assessment in Section 4.5 and the validity judgment of comparisons in Section 5.3 cannot be made.
+**Impact:** Section 4.5 cannot be assessed, and the validity of comparisons in Section 5.3 cannot be judged.
 
 **Evidence needed for the decision:** for the criteria values and thresholds, the quality needed for recording and the observations and measurements from assessment runs; for the repeat count and validity criteria, the spread of measurements across repeated comparison runs.
 
@@ -221,7 +221,7 @@ What each scene decides (views and effects, visual appearance criteria, the move
 
 #### Optimization decisions
 
-If movement or runtime conditions cannot be matched, the effect of a change cannot be isolated, and a change that raises performance can harm visuals or functions. Because a comparison run leaves out the resources the input program uses (Section 3), the results in an assessment run can differ. The checks are in Section 5.3.
+If movement or runtime conditions cannot be matched, the effect of a change cannot be isolated, and a change that raises performance can leave visual or functional requirements unmet. Because a comparison run leaves out the resources the input program uses (Section 3), the results in an assessment run can differ. The checks are in Section 5.3.
 
 #### Dependence on the values the tracking program produces
 
@@ -229,8 +229,8 @@ When a scene uses real-time tracking, the movement that can be shown in real tim
 
 #### Delivery and reproduction
 
-Where and how the deliverables will be published, and the conditions for obtaining what must be obtained separately (Section 6), have not been decided. The terms or availability of assets and input materials can prevent running or distribution, and if an earlier version of the input program can no longer be obtained, an assessment run cannot be repeated. The terms of the materials and programs actually used, and any substitute materials or delivery limits needed, must be checked. Related sections: 5.4; 6.
+Where and how the deliverables will be published, and the conditions for obtaining what must be obtained separately (Section 6), have not been decided. If assets or input materials cannot be used under their terms or cannot be obtained, the stage may not run or be distributed, and if an earlier version of the input program can no longer be obtained, an assessment run cannot be repeated. The terms of the materials and programs actually used, and any substitute materials or delivery limits needed, must be checked. Related sections: 5.4; 6.
 
-### 7.3 Incorporating decisions
+### 7.3 Document changes after decisions
 
 For each open item, the affected requirements, verification, and deliverables and the evidence needed for the decision are written together; for each risk, its impact, the checks, and the related sections. Once decided, the item is moved into the requirements of the relevant section, and any remaining limitation is written into the assessment in Section 5.5 together with its effect on running the stage and interpreting results.
