@@ -85,7 +85,7 @@ When the operator triggers the restore action, the stage must stop the camera an
 
 ### 4.5 Runtime and recording quality
 
-In the reference environment (Section 2), the stage must meet the criteria for output resolution, frame rate, and sustained execution time. The recording must meet the criteria for missed and late frames. The criteria values have not yet been decided (Section 7). The recording must contain the effects, avatar movement, and view changes during the take in the order in which they occurred.
+In the reference environment (Section 2), the stage must meet the criteria for output resolution, frame rate, and sustained execution time. The requirements of Sections 4.1 to 4.4 must also hold for the whole sustained execution time. The recording must meet the criteria for its resolution and frame rate and for missed and late frames. The criteria values have not yet been decided (Section 7). The recording must contain the effects, avatar movement, and view changes during the take in the order in which they occurred.
 
 ### 4.6 Recording and replaying input and controls
 
