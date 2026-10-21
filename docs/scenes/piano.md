@@ -8,7 +8,7 @@ This document contains only what this scene defines or adds on top of the common
 
 ## 2. Scope and input
 
-In addition to the work in Section 2 of the common PRD, the work for this scene builds a virtual piano whose keys move with the keyboard keys mapped to them. The stage produces the piano sound. The spacing of the virtual piano keys matches the spacing of the keyboard keys. The tracked hand's finger spacing then matches the piano key spacing, and the correction (defined below) pulls the fingers a shorter distance.
+The work for this scene adds to the work in Section 2 of the common PRD. It builds a virtual piano whose keys move with the keyboard keys mapped to them. The stage produces the piano sound. The spacing of the virtual piano keys matches the spacing of the keyboard keys. The tracked hand's finger spacing then matches the piano key spacing, and the correction (defined below) pulls the fingers a shorter distance.
 
 This scene uses three inputs:
 
@@ -40,7 +40,7 @@ Because there is only one control key, effects and view changes are prepared bef
 
 To the checks before recording (common PRD Section 3.1), the operator adds the following. Are the face and torso in the front camera's image? Are the hands on the keyboard in the image from the camera above the keyboard? Does a key press move a piano key and play its sound? Does the control key advance the cue list?
 
-A playing hand may leave the keyboard and the field of view of the camera above the keyboard (e.g., when the performer lifts a hand between pieces). Then the hand tracking values show that the hand is absent, and when the hand returns, it is tracked again. How the tracking values indicate the absence depends on the tracking program in use (Section 7.2). What the avatar's hand does in the meantime is defined in Section 4.3.
+A playing hand may leave the keyboard and the field of view of the camera above the keyboard. This happens, for example, when the performer lifts a hand between pieces. Then the hand tracking values show that the hand is absent, and when the hand returns, it is tracked again. How the tracking values indicate the absence depends on the tracking program in use (Section 7.2). What the avatar's hand does in the meantime is defined in Section 4.3.
 
 ## 4. Requirements
 
@@ -48,11 +48,11 @@ Only what this scene adds to the requirements in Section 4 of the common PRD is 
 
 ### 4.1 Applying movement
 
-The front tracking values must be applied to the head, face, torso, and shoulders. The hand tracking values must be applied to the wrist, hand, and fingers. The arm pose must be set in the order given in Section 2: apply the torso values first, then set the arm so that the wrist is at the received position. While the performer's hand is on the keyboard, the avatar's hand must be on the piano keys. The lower body is not tracked and stays in a seated pose.
+The front tracking values must be applied to the head, face, torso, and shoulders. The hand tracking values must be applied to the wrist, hand, and fingers. The arm pose must be set in the order given in Section 2. The torso values are applied first; then the arm is set so that the wrist is at the received position. While the performer's hand is on the keyboard, the avatar's hand must be on the piano keys. The lower body is not tracked and stays in a seated pose.
 
 When a key is pressed, the mapped piano key must move and its sound must play without waiting for the tracking values. The allowed delay is open; see "Additional controls, display delay, and restoration time" in Section 7.1 of the common PRD. The finger that pressed the key must be shown on the pressed piano key. The control key must not move a piano key, play a sound, or trigger the correction.
 
-When the correction pulls a finger, and when the finger returns to its tracked position after the key is released, the finger and wrist must not move farther from one frame to the next than the allowed value. Movement beyond that value is called a jump. The allowed value is open (Section 7.1, item 1).
+The finger and wrist must not move farther from one frame to the next than the allowed value. This applies when the correction pulls a finger and when the finger returns to its tracked position after the key is released. Movement beyond that value is called a jump. The allowed value is open (Section 7.1, item 1).
 
 ### 4.2 Views, effects, and visual criteria
 
@@ -64,11 +64,11 @@ The visual appearance criteria for lighting, materials, and background are open 
 
 ### 4.3 When a hand is not tracked
 
-While a hand is not tracked, the sound must still play and the piano keys must still move according to the key input. During a loss of tracking shorter than the hold time, that hand and arm hold their last pose. If the loss lasts longer, the hand moves over the transition time into a resting pose on the knee. When the hand is tracked again, it must follow the tracking again. While the last pose is held, the correction is still applied when a key is pressed; once the hand is in the resting pose, it is not applied. The hold time and the transition time are open (Section 7.1, item 1). Interruption of the tracking input itself, as opposed to a hand leaving the camera's view, is covered by Section 4.3 of the common PRD.
+While a hand is not tracked, the sound must still play and the piano keys must still move according to the key input. During a loss of tracking shorter than the hold time, that hand and arm hold their last pose. If the loss lasts longer, the hand moves over the transition time into a resting pose on the knee. When the hand is tracked again, it must follow the tracking again. While the last pose is held, the correction is still applied when a key is pressed. Once the hand is in the resting pose, the correction is not applied. The hold time and the transition time are open (Section 7.1, item 1). Interruption of the tracking input itself, as opposed to a hand leaving the camera's view, is covered by Section 4.3 of the common PRD.
 
 ### 4.4 Restoration
 
-The pre-recording settings of this scene (common PRD Section 4.4) are the state of the first cue. When the stage receives the restore action, it returns the lighting and the view to the first cue's state and resets the cue position to the first cue. It also releases all pressed piano keys and stops the sound. The tracking values keep arriving; restoration does not affect them. The restore action must not be triggered by mistake during the performance. It is therefore received through an input other than the playing keys and the control key. The initial view after restoration (common PRD Section 4.4) is the view of the first cue.
+The pre-recording settings of this scene (common PRD Section 4.4) are the state of the first cue. When the stage receives the restore action, it returns the lighting and the view to the first cue's state. It resets the cue position to the first cue, releases all pressed piano keys, and stops the sound. The tracking values keep arriving; restoration does not affect them. The restore action must not be triggered by mistake during the performance. It is therefore received through an input other than the playing keys and the control key. The initial view after restoration (common PRD Section 4.4) is the view of the first cue.
 
 ### 4.5 Sound and recording
 
@@ -106,19 +106,19 @@ In functional verification (common PRD Section 5.2), the developer checks the fo
 - When a hand is lifted out of view and brought back, does the avatar follow the sequence in Section 4.3 (hold, move to the resting pose, return)?
 - When recorded input that includes the playing keys is replayed, do the piano key movements, the sound, the correction, and the cue changes occur as at recording time?
 
-In visual verification (common PRD Section 5.2), the identification criteria of Section 4.2 are checked for each of the three views, using the reference image and the video during playing. For the hands-and-keys view, the video must come from actual playing.
+In visual verification (common PRD Section 5.2), the identification criteria of Section 4.2 are checked for each of the three views. The check uses the reference image and the video during playing. For the hands-and-keys view, the video must come from actual playing.
 
 Jumps (Section 4.1) are measured in the recorded file as the distance a finger or wrist moves from one frame to the next. The file's frame rate is recorded with them. The behavior when a hand is not tracked (Section 4.3) is measured as the number of frames of the hold and of the transition. The distance per frame during the transition is measured as well. Until the allowed values are decided, the measurements and observations are recorded and the items are left as not evaluated.
 
 The time difference between sound and video (Section 4.5) is measured in the recorded file. It is the difference between the moment the sound starts and the frame in which the piano key moves and the finger touches it.
 
-The tracking delay is measured by filming the performer's hand and the stage's screen together with a separate camera. The larger the delay, the farther the correction has to pull the finger, so this value is evidence for the allowed jump (Section 7.1, item 1).
+The tracking delay is measured by filming the performer's hand and the stage's screen together with a separate camera. The larger the delay, the farther the correction has to pull the finger. This value is therefore evidence for the allowed jump (Section 7.1, item 1).
 
 The replay in a comparison run (common PRD Section 3.2) includes the playing keys and the control key. So only the tracking program's load is absent, while the load from the piano key movement, the sound, and the cue changes is present.
 
 ## 6. Deliverables
 
-The demonstration video (common PRD Section 6) shows the three views and the cue changes, the playing hands and the piano keys, and the piano sound. Its stated recording conditions also include the position and height of the two cameras and the version of the key mapping table.
+The demonstration video (common PRD Section 6) shows the three views, the cue changes, the playing hands on the piano keys, and the piano sound. Its stated recording conditions also include the position and height of the two cameras and the version of the key mapping table.
 
 The recorded input used to repeat verification consists of the tracking values from the two cameras and the key input (playing keys and control key). It contains no camera video. How much of the recorded input is provided is open (Section 7.1, item 5).
 
@@ -133,17 +133,24 @@ The input materials of this scene (common PRD Section 5.4) are the key mapping t
 
 ## 7. Open decisions and risks
 
-Only the open items, risks, and possible later changes of this scene that do not overlap with Section 7 of the common PRD are written here. The items follow the format of Section 7.1 of the common PRD.
+This section lists only the open items, risks, and possible later changes of this scene. Items covered by Section 7 of the common PRD are not repeated. The items follow the format of Section 7.1 of the common PRD.
 
 ### 7.1 Open items
 
 #### Item 1 — Allowed values and times
 
-**Open:** the allowed jump (Section 4.1); the hold time and transition time when a hand is not tracked (Section 4.3); the allowed time difference between sound and video (Section 4.5).
+**Open:**
+
+- the allowed jump (Section 4.1)
+- the hold time and transition time when a hand is not tracked (Section 4.3)
+- the allowed time difference between sound and video (Section 4.5)
 
 **Effect:** the three requirements cannot be assessed, and the measurements of Section 5 remain observations only.
 
-**Evidence needed for the decision:** the tracking delay and the sound-to-video time difference measured in assessment runs (Section 5), and the length and frequency of hand tracking losses observed in assessment runs.
+**Evidence needed for the decision:**
+
+- the tracking delay and the sound-to-video time difference measured in assessment runs (Section 5)
+- the length and frequency of hand tracking losses observed in assessment runs
 
 **Related sections:** 4.1; 4.3; 4.5; 5.
 
@@ -159,7 +166,7 @@ Only the open items, risks, and possible later changes of this scene that do not
 
 #### Item 3 — Key mapping table, pitch range, and correction rule
 
-**Open:** which piano key each keyboard key plays (the mapping table), the pitch range, and the rule for choosing the finger in the correction. Placing the playing keys in the letter rows (Section 3) is decided. Because the fingers are tracked, no fixed fingering (a finger assigned to each key in advance) is needed; the open rule is how to choose, among the tracked fingers, the one the correction moves.
+**Open:** which piano key each keyboard key plays (the mapping table), the pitch range, and the rule for choosing the finger in the correction. Placing the playing keys in the letter rows (Section 3) is decided. Because the fingers are tracked, no fixed fingering (a finger assigned to each key in advance) is needed. The open rule is how to choose, among the tracked fingers, the one the correction moves.
 
 **Effect:** the test conditions for the piano key and correction requirements of Section 4.1 are not defined.
 
@@ -187,7 +194,7 @@ Only the open items, risks, and possible later changes of this scene that do not
 
 **Related sections:** 6.
 
-The coordinate reference of the received wrist position is covered by "Coordinate reference of received joint positions" in Section 7.1 of the common PRD. Pressing the control key while a cue change is in progress is covered by the additional controls in "Additional controls, display delay, and restoration time" in the same section.
+The coordinate reference of the received wrist position is covered by "Coordinate reference of received joint positions" in Section 7.1 of the common PRD. Pressing the control key while a cue change is in progress is an additional control. It is covered by "Additional controls, display delay, and restoration time" in the same section.
 
 ### 7.2 Risks
 
