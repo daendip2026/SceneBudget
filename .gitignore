@@ -83,13 +83,7 @@ crashlytics-build.properties
 *.rdc
 /[Pp]rofiler[Cc]aptures/
 
-# Not for the public remote
-/private/
-
-# Local repository-owner instructions; AGENTS.md is the shared baseline.
-# CLAUDE.local.md is the Claude Code loader that imports AGENTS.override.md.
+# Per-user agent instructions and settings, not shared with contributors.
 /AGENTS.override.md
 /CLAUDE.local.md
-
-# Local Claude Code settings. Not shared with contributors.
 /.claude/settings.local.json
